@@ -1,0 +1,22 @@
+swn_db:
+    image: mysql:5.7
+    ports:
+        - 3307:3306
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: swn
+swn_php:
+    build: ./php-fpm
+    volumes:
+        - ../:/var/www
+    links:
+        - swn_db
+    working_dir: /var/www
+swn_nginx:
+    build: ./nginx
+    ports:
+        - 8000:80
+    links:
+        - swn_php
+    volumes_from:
+        - swn_php
