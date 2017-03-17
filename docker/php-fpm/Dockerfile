@@ -17,6 +17,11 @@ RUN curl -O -L https://phar.phpunit.de/phpunit.phar
 RUN chmod +x phpunit.phar
 RUN mv phpunit.phar /usr/local/bin/phpunit
 
+# Install codeception globally
+RUN curl -O -L http://codeception.com/codecept.phar
+RUN chmod +x codecept.phar
+RUN mv codecept.phar /usr/local/bin/codecept
+
 USER $user
 
 WORKDIR /var/www

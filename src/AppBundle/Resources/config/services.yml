@@ -1,0 +1,9 @@
+services:
+    app.company_manager:
+        class: AppBundle\Service\CompanyManager
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    app.serializer.paginated_result_handler:
+        class: AppBundle\Serializer\PaginatedResultHandler
+        tags:
+            - { name: jms_serializer.subscribing_handler }

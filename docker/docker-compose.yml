@@ -5,12 +5,20 @@ swn_db:
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: swn
+swn_test_db:
+    image: mysql:5.7
+    ports:
+        - 3308:3306
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: swn_test
 swn_php:
     build: ./php-fpm
     volumes:
         - ../:/var/www
     links:
         - swn_db
+        - swn_test_db
     working_dir: /var/www
 swn_nginx:
     build: ./nginx
@@ -20,3 +28,7 @@ swn_nginx:
         - swn_php
     volumes_from:
         - swn_php
+swn_swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+        - 8010:8080
