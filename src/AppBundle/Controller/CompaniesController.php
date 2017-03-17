@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\Contact;
 use AppBundle\Form\Type\CompanyType;
+use AppBundle\Form\Type\ContactType;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use AppBundle\Entity\Company;
 use AppBundle\Model\PaginatedResult;
@@ -99,10 +101,57 @@ class CompaniesController extends FOSRestController
     }
 
     /**
+     * @Rest\QueryParam(name="offset", requirements="\d+", default=0, description="Offset")
+     * @Rest\QueryParam(name="limit", requirements="\d+", default="5", description="Limit")
+     *
+     * @param Company $company
+     * @param ParamFetcherInterface $paramFetcher
+     *
+     * @return PaginatedResult
+     */
+    public function getCompanyContactsAction(Company $company, ParamFetcherInterface $paramFetcher)
+    {
+        return $this->getContactManager()
+            ->paginateForCompany($company, $paramFetcher->get('limit'), $paramFetcher->get('offset'));
+    }
+
+    /**
+     * @param Company $company
+     * @param Request $request
+     *
+     * @return array|View
+     */
+    public function postCompanyContactAction(Company $company, Request $request)
+    {
+        $contact = new Contact();
+        $contact->setCompany($company);
+
+        $form = $this->createForm(ContactType::class, $contact);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->getContactManager()->update($contact);
+
+            return compact('contact');
+        }
+
+        return $this->view($form, 422);
+    }
+
+    /**
      * @return \AppBundle\Service\CompanyManager
      */
     protected function getCompanyManager()
     {
         return $this->get('app.company_manager');
+    }
+
+    /**
+     * @return \AppBundle\Service\ContactManager
+     */
+    protected function getContactManager()
+    {
+        return $this->get('app.contact_manager');
     }
 }

@@ -1,3 +1,7 @@
 companies:
     type:     rest
     resource: AppBundle\Controller\CompaniesController
+
+contacts:
+    type:     rest
+    resource: AppBundle\Controller\ContactsController

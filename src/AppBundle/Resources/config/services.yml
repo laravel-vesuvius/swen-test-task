@@ -3,6 +3,10 @@ services:
         class: AppBundle\Service\CompanyManager
         arguments: ["@doctrine.orm.entity_manager"]
 
+    app.contact_manager:
+        class: AppBundle\Service\ContactManager
+        arguments: ["@doctrine.orm.entity_manager"]
+
     app.serializer.paginated_result_handler:
         class: AppBundle\Serializer\PaginatedResultHandler
         tags:

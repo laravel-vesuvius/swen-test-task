@@ -4,6 +4,7 @@ namespace AppBundle\Serializer;
 
 
 use AppBundle\Model\CompaniesPaginatedResult;
+use AppBundle\Model\ContactsPaginatedResult;
 use AppBundle\Model\PaginatedResult;
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
@@ -70,6 +71,8 @@ class PaginatedResultHandler implements SubscribingHandlerInterface
         switch (get_class($paginatedResult)) {
             case CompaniesPaginatedResult::class:
                 return 'companies';
+            case ContactsPaginatedResult::class:
+                return 'contacts';
             default:
                 return 'data';
         }

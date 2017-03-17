@@ -22,6 +22,18 @@ trait Pagination
     {
         $builder = $this->createQueryBuilder('items');
 
+        $this->addPagination($builder, $limit, $offset);
+
+        return $builder->getQuery()->getResult();
+    }
+
+    /**
+     * @param QueryBuilder $builder
+     * @param int|bool $limit
+     * @param int|bool $offset
+     */
+    public function addPagination(QueryBuilder $builder, $limit = false, $offset = false)
+    {
         if ($limit) {
             $builder->setMaxResults($limit);
         }
@@ -29,8 +41,6 @@ trait Pagination
         if ($offset) {
             $builder->setFirstResult($offset);
         }
-
-        return $builder->getQuery()->getResult();
     }
 
     /**

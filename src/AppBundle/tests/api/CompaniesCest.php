@@ -4,6 +4,7 @@ namespace AppBundle;
 
 
 use AppBundle\Entity\Company;
+use AppBundle\Entity\Contact;
 use Codeception\Util\HttpCode;
 
 class CompaniesCest
@@ -83,5 +84,47 @@ class CompaniesCest
         $I->seeResponseJsonMatchesXpath('//companies');
         $I->seeResponseJsonMatchesXpath('//offset');
         $I->seeResponseJsonMatchesXpath('//limit');
+    }
+
+    public function getCompanyContactsTest(ApiTester $I)
+    {
+        $contact = $I->have(Contact::class);
+
+        $I->wantTo('see company contacts in response');
+        $I->sendGET("/companies/{$contact->getCompany()->getId()}/contacts");
+
+        $I->seeResponseJsonMatchesXpath('//contacts');
+        $I->seeResponseJsonMatchesXpath('//offset');
+        $I->seeResponseJsonMatchesXpath('//limit');
+    }
+
+    public function postCompanyContactTest(ApiTester $I)
+    {
+        $company = $I->have(Company::class);
+        $url = "/companies/{$company->getId()}/contacts";
+
+        $I->wantTo('create contact and see response');
+        $I->sendPOST($url, []);
+        $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
+
+        $data = [
+            'contact' => [
+                'salutation' => 'test',
+                'firstName' => 'test',
+                'lastName' => 'test',
+                'mail' => 'test',
+            ],
+        ];
+        $I->sendPOST($url, $data);
+        $id = $I->grabFromRepository(Contact::class, 'id', ['salutation' => 'test']);
+        $I->seeResponseContainsJson([
+            'contact' => [
+                'id' => $id,
+                'salutation' => $data['contact']['salutation'],
+                'first_name' => $data['contact']['firstName'],
+                'last_name' => $data['contact']['lastName'],
+                'mail' => $data['contact']['mail'],
+            ],
+        ]);
     }
 }
