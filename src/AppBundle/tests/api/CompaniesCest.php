@@ -30,14 +30,14 @@ class CompaniesCest
         $I->sendPOST('/companies', []);
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
 
-        $data = ['company' => ['name' => 'test', 'customerNo' => 1]];
+        $data = ['company' => ['name' => 'test', 'customer_no' => 1]];
         $I->sendPOST('/companies', $data);
         $id = $I->grabFromRepository(Company::class, 'id', ['name' => 'test']);
         $I->seeResponseContainsJson([
             'company' => [
                 'id' => $id,
                 'name' => $data['company']['name'],
-                'customer_no' => $data['company']['customerNo']
+                'customer_no' => $data['company']['customer_no']
             ]
         ]);
     }
@@ -51,14 +51,14 @@ class CompaniesCest
         $I->sendPUT($url, []);
         $I->seeResponseCodeIs(HttpCode::UNPROCESSABLE_ENTITY);
 
-        $data = ['company' => ['name' => 'new_test', 'customerNo' => 1]];
+        $data = ['company' => ['name' => 'new_test', 'customer_no' => 1]];
         $I->sendPUT($url, $data);
         $I->seeInRepository(Company::class, ['id' => $company->getId(), 'name' => 'new_test']);
         $I->seeResponseContainsJson([
             'company' => [
                 'id' => $company->getId(),
                 'name' => $data['company']['name'],
-                'customer_no' => $data['company']['customerNo']
+                'customer_no' => $data['company']['customer_no']
             ]
         ]);
     }
@@ -110,8 +110,8 @@ class CompaniesCest
         $data = [
             'contact' => [
                 'salutation' => 'test',
-                'firstName' => 'test',
-                'lastName' => 'test',
+                'first_name' => 'test',
+                'last_name' => 'test',
                 'mail' => 'test',
             ],
         ];
@@ -121,8 +121,8 @@ class CompaniesCest
             'contact' => [
                 'id' => $id,
                 'salutation' => $data['contact']['salutation'],
-                'first_name' => $data['contact']['firstName'],
-                'last_name' => $data['contact']['lastName'],
+                'first_name' => $data['contact']['first_name'],
+                'last_name' => $data['contact']['last_name'],
                 'mail' => $data['contact']['mail'],
             ],
         ]);

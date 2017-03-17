@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -46,6 +47,7 @@ class Company
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Contact", mappedBy="company")
+     * @JMS\Exclude()
      */
     private $contacts;
 

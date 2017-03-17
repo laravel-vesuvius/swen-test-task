@@ -36,19 +36,25 @@ class ContactsCest
 
         $contactData = [
             'salutation' => 'test',
-            'firstName' => 'test',
-            'lastName' => 'test',
+            'first_name' => 'test',
+            'last_name' => 'test',
             'mail' => 'test',
         ];
         $data = ['contact' => $contactData];
         $I->sendPUT($url, $data);
-        $I->seeInRepository(Contact::class, ['id' => $contact->getId()] + $contactData);
+        $I->seeInRepository(Contact::class, [
+            'id' => $contact->getId(),
+            'salutation' => $contactData['salutation'],
+            'firstName' => $contactData['first_name'],
+            'lastName' => $contactData['last_name'],
+            'mail' => $contactData['mail'],
+        ]);
         $I->seeResponseContainsJson([
             'contact' => [
                 'id' => $contact->getId(),
                 'salutation' => $contactData['salutation'],
-                'first_name' => $contactData['firstName'],
-                'last_name' => $contactData['lastName'],
+                'first_name' => $contactData['first_name'],
+                'last_name' => $contactData['last_name'],
                 'mail' => $contactData['mail'],
             ],
         ]);

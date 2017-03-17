@@ -21,7 +21,7 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name')
-            ->add('customerNo');
+            ->add('customer_no', null, ['property_path' => 'customerNo']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
