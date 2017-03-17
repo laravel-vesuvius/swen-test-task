@@ -1,0 +1,280 @@
+swagger: '2.0'
+info:
+  title: SWEN test task
+  description: SWEN test task
+  version: "1.0.0"
+host: localhost:8000
+schemes:
+  - http
+basePath: /api/v1
+produces:
+  - application/json
+paths:
+  /companies:
+    get:
+      summary: Companies
+      description: List of companies
+      parameters:
+        - name: offset
+          in: query
+          description: Offset.
+          type: number
+          format: integer
+        - name: limit
+          in: query
+          description: Limit.
+          type: number
+          format: integer
+      tags:
+        - Companies
+      responses:
+        200:
+          description: List of companies
+          schema:
+            $ref: './definitions/CompaniesPaginatedResult.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+    post:
+      summary: Create company
+      description: Create company
+      parameters:
+        - name: company
+          in: body
+          description: Company to add to the store
+          required: true
+          schema:
+            $ref: './definitions/CompanyInput.yaml'
+      tags:
+        - Companies
+      responses:
+        200:
+          description: Created company
+          schema:
+            $ref: './definitions/CompanyResponse.yaml'
+        400:
+          description: Validation error
+          schema:
+            $ref: './definitions/ValidationErrors.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+  /companies/{id}:
+    get:
+      summary: Company
+      description: Company
+      parameters:
+        - name: id
+          in: path
+          description: ID of company to fetch
+          required: true
+          type: integer
+          format: int64
+      tags:
+        - Companies
+      responses:
+        200:
+          description: Company response
+          schema:
+            $ref: './definitions/CompanyResponse.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+    put:
+      summary: Update company
+      description: Update company
+      parameters:
+        - name: id
+          in: path
+          description: ID of company to update
+          required: true
+          type: integer
+          format: int64
+        - name: company
+          in: body
+          description: Company to add to the store
+          required: true
+          schema:
+            $ref: './definitions/CompanyInput.yaml'
+      tags:
+        - Companies
+      responses:
+        200:
+          description: Company response
+          schema:
+            $ref: './definitions/CompanyResponse.yaml'
+        400:
+          description: Validation error
+          schema:
+            $ref: './definitions/ValidationErrors.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+    delete:
+      summary: Delete company
+      description: Delete company
+      parameters:
+        - name: id
+          in: path
+          description: ID of company to update
+          required: true
+          type: integer
+          format: int64
+      tags:
+        - Companies
+      responses:
+        200:
+          description: Company deleted
+          schema:
+            $ref: './definitions/Object.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+
+  /companies/{companyId}/contacts:
+    get:
+      summary: Company contacts
+      description: List of contacts
+      parameters:
+        - name: companyId
+          in: path
+          description: ID of contact
+          required: true
+          type: integer
+          format: int64
+        - name: offset
+          in: query
+          description: Offset.
+          type: number
+          format: integer
+        - name: limit
+          in: query
+          description: Limit.
+          type: number
+          format: integer
+      tags:
+        - Companies
+        - Contacts
+      responses:
+        200:
+          description: List of contacts
+          schema:
+            $ref: './definitions/ContactsPaginatedResult.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+    post:
+      summary: Create contact
+      description: Create contact
+      parameters:
+        - name: companyId
+          in: path
+          description: ID of contact
+          required: true
+          type: integer
+          format: int64
+        - name: contact
+          in: body
+          description: Contact to add to the store
+          required: true
+          schema:
+            $ref: './definitions/ContactInput.yaml'
+      tags:
+        - Companies
+        - Contacts
+      responses:
+        200:
+          description: Created contact
+          schema:
+            $ref: './definitions/ContactResponse.yaml'
+        400:
+          description: Validation error
+          schema:
+            $ref: './definitions/ValidationErrors.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+  /contacts/{id}:
+    get:
+      summary: Contact
+      description: Contact
+      parameters:
+        - name: id
+          in: path
+          description: ID of contact to fetch
+          required: true
+          type: integer
+          format: int64
+      tags:
+        - Companies
+        - Contacts
+      responses:
+        200:
+          description: Contact response
+          schema:
+            $ref: './definitions/ContactResponse.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+    put:
+      summary: Update contact
+      description: Update contact
+      parameters:
+        - name: id
+          in: path
+          description: ID of contact to update
+          required: true
+          type: integer
+          format: int64
+        - name: contact
+          in: body
+          description: Contact to add to the store
+          required: true
+          schema:
+            $ref: './definitions/ContactInput.yaml'
+      tags:
+        - Companies
+        - Contacts
+      responses:
+        200:
+          description: Contact response
+          schema:
+            $ref: './definitions/ContactResponse.yaml'
+        400:
+          description: Validation error
+          schema:
+            $ref: './definitions/ValidationErrors.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'
+    delete:
+      summary: Delete contact
+      description: Delete contact
+      parameters:
+        - name: id
+          in: path
+          description: ID of contact to update
+          required: true
+          type: integer
+          format: int64
+      tags:
+        - Companies
+        - Contacts
+      responses:
+        200:
+          description: Contact deleted
+          schema:
+            $ref: './definitions/Object.yaml'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: './definitions/Error.yaml'

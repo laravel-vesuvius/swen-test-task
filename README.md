@@ -41,3 +41,6 @@ Run tests
 ```
 codecept run
 ```
+
+### Documentation
+Go to `http://localhost:8010` and enter link to swagger documentation `http://localhost:8000/swagger/index.yaml`

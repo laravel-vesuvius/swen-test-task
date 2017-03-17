@@ -1,0 +1,7 @@
+type: object
+allOf:
+  - properties:
+      id:
+        type: integer
+        description: Unique identifier.
+  - $ref: "./CompanyData.yaml"

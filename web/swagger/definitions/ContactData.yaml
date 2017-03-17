@@ -1,0 +1,14 @@
+type: object
+properties:
+  salutation:
+    type: string
+    description: Salutation.
+  first_name:
+    type: string
+    description: First name.
+  last_name:
+    type: string
+    description: Last name.
+  mail:
+    type: string
+    description: Mail.
